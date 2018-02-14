@@ -1,38 +1,38 @@
 Ansible Role for Tomcat
 =========
 
-This an ansible role for RedHat and Debian Family
+The Apache Tomcat® software is an open source implementation of the Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket technologies. The Java Servlet, JavaServer Pages, Java Expression Language and Java WebSocket specifications are developed under the Java Community Process.
 
 Requirements
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+The requirment for jetty is:-
+1. Debian and RedHat or CentOS Machine.
+2. Openjdk or oracle java installed in it.
+3. Python should be installed in target machine.
 
 Role Variables
 --------------
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+The role variable are stored in [vars](https://github.com/abhishek-ansible/tomcat/tree/master/vars) You don't have any need to pass extra vars
 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+There are no any futher dependency rather than [java](https://github.com/abhishek-ansible/java). You have to specify variables in [vars](https://github.com/abhishek-ansible/tomcat/tree/master/vars).
 
 Example Playbook
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The main playbook file looks like
 
-    - hosts: servers
+    - hosts: tomcat
+      user: root
       roles:
-         - { role: username.rolename, x: 42 }
+        - tomcat
 
 License
 -------
 
 BSD
 
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).

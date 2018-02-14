@@ -1,0 +1,81 @@
+---
+- name: To add a group tomcat
+  group: name=tomcat state=present
+  tags: tomcat_group
+
+- name: To add tomcat user
+  user: name=tomcat shell=/bin/bash groups=tomcat append=yes
+  tags: tomcat_user
+
+- name: Install unzip
+  yum:
+    name: unzip
+    state: present
+
+- name: To create config directory
+  file:
+    path: "{{ tomcat_dir }}"
+    state: directory
+    owner: tomcat
+    group: tomcat
+
+- name: Download and unarchive the tomcat8
+  unarchive:
+    src: "{{ tomcat_download_url }}"
+    dest: "/root/"
+    remote_src: yes
+
+- name: Copy the files of new download
+  shell: cp -rvf /root/apache-tomcat-8.5.27/* /opt/tomcat/
+  run_once: true
+  
+- name: Tomcat user file
+  template:
+    src: tomcat-users.xml.j2
+    dest: "{{ tomcat_dir }}conf/tomcat-users.xml"
+    owner: tomcat
+    group: tomcat
+    mode: 755
+  tags: copy_user_xml
+
+- name: Context file
+  template:
+    src: context.xml.j2
+    dest: "{{ tomcat_dir }}/webapps/manager/META-INF/context.xml"
+    owner: tomcat
+    group: tomcat
+
+- name: Create tomcat service
+  template:
+    src: tomcat-service-redhat.j2
+    dest: /etc/systemd/system/tomcat.service
+
+- name: Change the mode of tomcat
+  file:
+    dest: /opt/tomcat/
+    owner: tomcat
+    group: tomcat
+    recurse: yes
+    remote_src: yes
+  tags:
+    - py
+
+- name: Change file permission tomcat
+  file:
+    path: /opt/tomcat/
+    mode: 0755
+    recurse: yes
+    remote_src: yes
+  tags:
+    - ty
+
+- name: Reload Daemon 
+  systemd:
+    daemon_reload: yes
+
+- name: Start Tomcat
+  service:
+    name: tomcat
+    state: started
+    enabled: true
+

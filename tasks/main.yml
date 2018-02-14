@@ -1,0 +1,16 @@
+---
+# tasks file for tomcat
+
+- name: To install tomcat in RedHat
+  include: redhat.yml
+  when:
+    ansible_os_family == 'RedHat'
+
+- name: To install tomcat in Debian
+  include: debian.yml
+  when:
+    ansible_os_family == 'Debian'
+
+
+
+

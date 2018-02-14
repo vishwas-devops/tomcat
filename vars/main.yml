@@ -1,0 +1,8 @@
+---
+# vars file for tomcat
+tomcat_download_url: http://www-us.apache.org/dist/tomcat/tomcat-8/v8.5.27/bin/apache-tomcat-8.5.27.tar.gz
+java_home: /usr/lib/jvm/java-8-oracle
+tomcat_dir: /opt/tomcat/
+tomcat_user: admin
+tomcat_password: password
+java_home_redhat: 

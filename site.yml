@@ -1,0 +1,6 @@
+---
+- hosts: tomcat
+  user: root
+  become: yes
+  roles:
+    - tomcat
